@@ -16,6 +16,7 @@
   },
 
   "background": {
+    "page": "blok.html",
     "scripts": ["blok.js"]
   },
 

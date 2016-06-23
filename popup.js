@@ -24,42 +24,7 @@ browser.runtime.getBackgroundPage(function(backgroundPage) {
   }
   for (reasonElement of document.querySelectorAll(".reason")) {
     reasonElement.addEventListener("click", function(event){
-      // Send the reason to some metrics/telemetry/analytics pipeline
-      /*
-       * https://github.com/mozilla/testpilot/pull/952 would be:
-
-      fetch('https://testpilot.firefox.com/api/metrics/ping/testpilottest',
-        {
-          method: 'POST',
-          mode: 'cors',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-          })
-        }
-      )
-      .then(resp => {
-        console.log('metric ping success', resp)
-      })
-      .catch(e => {
-        console.log('problem sending metrics ping', e)
-      });
-
-
-       * https://github.com/mozilla/testpilot/pull/1008 would be:
-
-
-      document.getElementById('tp-proxy').contentWindow.postMessage({
-        op: 'queueTelemetryPing',
-        data: {
-          subject: 'tracking-protection-experiment',
-          data: {
-            originTopHost: ..,
-            reason: ..
-          }
-        }
-      }, '*');
-
-      */
+      backgroundPage.postMessage({reason: event.target.value}, '*');
       window.close();
     });
   }

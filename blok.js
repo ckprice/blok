@@ -8,6 +8,20 @@ var total_exec_time = {};
 var disabled_tabs = [];
 
 
+window.addEventListener('message', function(event) {
+  document.getElementById('tp-proxy').contentWindow.postMessage({
+    op: 'queueTelemetryPing',
+    data: {
+      subject: 'tracking-protection-experiment',
+      data: {
+        originTopHost: current_active_origin,
+        reason: event.data.reason
+      }
+    }
+  }, '*');
+});
+
+
 function restartBlok(tabID) {
   chrome.pageAction.hide(tabID);
   blocked_requests[tabID] = [];
